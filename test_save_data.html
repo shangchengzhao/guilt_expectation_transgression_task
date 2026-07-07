@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Test Data Saving - Guilt Task</title>
+</head>
+<body>
+    <h1>Guilt Task - Data Saving Test</h1>
+    <button onclick="testDataSaving()">Test Save Data</button>
+    <div id="result" style="margin-top: 20px; padding: 10px; background: #f0f0f0;"></div>
+
+    <script>
+        function testDataSaving() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Sending test data...';
+
+            const filename = 'TEST_' + Date.now() + '_interaction_task_2026-07-07_test.csv';
+            const csvData = '\uFEFFchooserow,ResponseID,participant,PROLIFIC_PID,session\n' +
+                '"[1,2,3]",R_TEST,TEST_PID,TEST_PID,1\n';
+
+            fetch('save_data.php', {
+                method: 'POST',
+                body: JSON.stringify({ filename: filename, data: csvData }),
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('HTTP ' + response.status + ': ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(result => {
+                if (result.success) {
+                    resultDiv.innerHTML =
+                        '<h3 style="color: green;">SUCCESS</h3>' +
+                        '<p><strong>File saved:</strong> ' + result.filename + '</p>' +
+                        '<p><strong>Bytes written:</strong> ' + result.bytes + '</p>' +
+                        '<p>Check the <code>data/</code> directory on your server.</p>';
+                } else {
+                    resultDiv.innerHTML =
+                        '<h3 style="color: red;">ERROR</h3>' +
+                        '<p>' + result.error + '</p>';
+                }
+            })
+            .catch(error => {
+                resultDiv.innerHTML =
+                    '<h3 style="color: red;">NETWORK ERROR</h3>' +
+                    '<p>' + error.message + '</p>';
+            });
+        }
+    </script>
+</body>
+</html>
