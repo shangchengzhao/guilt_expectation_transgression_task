@@ -54,10 +54,16 @@ function buildExperimentCsv(experiment) {
   return '\uFEFF' + lines.join('\n');
 }
 
+function sanitizeFilenamePart(value) {
+  return String(value).replace(/[^a-zA-Z0-9_.-]/g, '_');
+}
+
 function buildResultsFilename() {
-  const participant = expInfo['PROLIFIC_PID'] || expInfo['participant'] || 'PARTICIPANT';
-  const date = expInfo['date'] || util.MonotonicClock.getDateStr();
-  return participant + '_' + expName + '_' + date + '.csv';
+  const participant = sanitizeFilenamePart(
+    expInfo['PROLIFIC_PID'] || expInfo['participant'] || 'PARTICIPANT'
+  );
+  const date = sanitizeFilenamePart(expInfo['date'] || util.MonotonicClock.getDateStr());
+  return participant + '_' + sanitizeFilenamePart(expName) + '_' + date + '.csv';
 }
 
 function getNextTaskUrl() {

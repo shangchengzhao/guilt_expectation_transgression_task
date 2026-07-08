@@ -33,7 +33,7 @@ Upload:
 - `data/.htaccess`, `test_server_config.php`, `test_save_data.html`
 
 ```bash
-chmod 755 data/
+chmod 777 data/
 chmod 644 *.html *.php *.js
 ```
 
@@ -54,7 +54,7 @@ https://yeslab-survey.psych.ucsb.edu/guilt_expectation_trait_task/index.html?Res
 ## Saved filename format
 
 ```
-{PROLIFIC_PID}_interaction task_{date}.csv
+{PROLIFIC_PID}_interaction_task_{date}.csv
 ```
 
 `ResponseID` is stored in the `ResponseID` column and `expInfo` fields inside the CSV.
