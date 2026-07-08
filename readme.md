@@ -8,15 +8,16 @@ This experiment is revised based on the one named 'Game' in Yeslab pavlovia acco
 
 Hosted on `yeslab-survey.psych.ucsb.edu` (same server as congress_semantic).
 
+- Deploy path: `public_html/guilt_expectation_transgression_task/`
 - Entry: `index.html` (PsychoJS 2021.2.3)
 - Data save: `save_data.php` writes CSV to `data/`
 - Participant ID: `PROLIFIC_PID` (filename + `participant` column); `ResponseID` in `ResponseID` column
-- Post-task redirect: `guilt_sad_trait_task` on the same server
+- Post-task redirect: `guilt_expectation_trait_task` on the same server
 
 See [TESTING_DATA_SAVING.md](TESTING_DATA_SAVING.md) for deploy and test steps.
 
 # Important changelog
-- July 2026: Self-hosted on yeslab-survey; PHP data saving; redirect to guilt_sad_trait_task
+- July 2026: Self-hosted on yeslab-survey; PHP data saving; redirect to guilt_expectation_trait_task
 - July 2026: Abandon other js and python scripts, as well as psychopy builder, all changes directly applied on `interaction_task.js`
 
 # Python script

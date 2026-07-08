@@ -22,7 +22,7 @@ php -S localhost:8000
 
 ```bash
 ssh username@yeslab-survey.psych.ucsb.edu
-cd /home/www/apps/yeslab-survey.psych.ucsb.edu/public_html/guilt_task
+cd /home/www/apps/yeslab-survey.psych.ucsb.edu/public_html/guilt_expectation_transgression_task
 ```
 
 Upload:
@@ -40,7 +40,7 @@ chmod 644 *.html *.php *.js
 ## Qualtrics entry URL
 
 ```
-https://yeslab-survey.psych.ucsb.edu/guilt_task/index.html?ResponseID=${e://Field/ResponseID}&PROLIFIC_PID=${e://Field/PROLIFIC_PID}
+https://yeslab-survey.psych.ucsb.edu/guilt_expectation_transgression_task/index.html?ResponseID=${e://Field/ResponseID}&PROLIFIC_PID=${e://Field/PROLIFIC_PID}
 ```
 
 ## Post-task redirect
@@ -48,7 +48,7 @@ https://yeslab-survey.psych.ucsb.edu/guilt_task/index.html?ResponseID=${e://Fiel
 On completion, participants are sent to:
 
 ```
-https://yeslab-survey.psych.ucsb.edu/guilt_sad_trait_task/index.html?ResponseID=...&PROLIFIC_PID=...
+https://yeslab-survey.psych.ucsb.edu/guilt_expectation_trait_task/index.html?ResponseID=...&PROLIFIC_PID=...
 ```
 
 ## Saved filename format

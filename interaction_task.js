@@ -17,9 +17,8 @@ let expInfo = {'ResponseID': '', 'PROLIFIC_PID': '', 'session': '1'};
 
 const CONFIG = {
   SAVE_DATA_URL: 'save_data.php',
-  NEXT_TASK_URL: 'https://yeslab-survey.psych.ucsb.edu/guilt_sad_trait_task/index.html',
+  NEXT_TASK_URL: 'https://yeslab-survey.psych.ucsb.edu/guilt_expectation_trait_task/index.html',
 };
-
 function escapeCsvCell(value) {
   if (value === undefined || value === null) {
     return '';
