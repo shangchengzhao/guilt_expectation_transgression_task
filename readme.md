@@ -1,12 +1,15 @@
 # Basic Information
 **Author**: Shangcheng Zhao
-This experiment is revised based on the one named 'Game' in Yeslab pavlovia account 
+
+This experiment is revised based on the one named 'Game' in Yeslab pavlovia account
+
 **Creation Date**: 11/20/2023 - 10/03/2024
+
 **Last Revision**: 07/07/2026
 
 # Self-hosting
 
-Hosted on `yeslab-survey.psych.ucsb.edu` (same server as congress_semantic).
+Hosted on `yeslab-survey.psych.ucsb.edu`
 
 - Deploy path: `public_html/guilt_expectation_transgression_task/`
 - Entry: `index.html` (PsychoJS 2021.2.3)
@@ -89,6 +92,6 @@ guilt result: if no one is punished - 2s, if watch - 13s
 showing DV, wait for response
 The average time for whole procedure is 24.25s + response time (10s, assumed) = 35s per trial
 ### Other changes
-Add variable **tesing** for easy test part of formal experiment
+Add variable **tesing** to test part of the experiment
 Add loop **trial_redo**. Record incomple trials in variable **incompleteTrials** and give pps a second chance to re-complete them
 

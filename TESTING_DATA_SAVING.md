@@ -9,7 +9,7 @@
 ## Local test
 
 ```bash
-cd Guilt_expectation_transgression_task
+cd guilt_expectation_transgression_task
 php -S localhost:8000
 ```
 

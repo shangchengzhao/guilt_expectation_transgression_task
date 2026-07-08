@@ -197,10 +197,85 @@ psychoJS.openWindow({
 // schedule the experiment:
 util.addInfoFromUrl(expInfo);
 
+const experimentResources = [
+  {'name': 'RandomDot16.png', 'path': 'RandomDot16.png'},
+  {'name': 'punishpic.png', 'path': 'punishpic.png'},
+  {'name': '9dot2.png', 'path': '9dot2.png'},
+  {'name': 'condition.csv', 'path': 'condition.csv'},
+  {'name': 'RandomDot35.png', 'path': 'RandomDot35.png'},
+  {'name': 'RandomDot20.png', 'path': 'RandomDot20.png'},
+  {'name': 'RandomDot14.png', 'path': 'RandomDot14.png'},
+  {'name': 'pairing_sub.png', 'path': 'pairing_sub.png'},
+  {'name': '9290.JPG', 'path': '9290.JPG'},
+  {'name': 'Resp_Pic.png', 'path': 'Resp_Pic.png'},
+  {'name': 'RandomDot3.png', 'path': 'RandomDot3.png'},
+  {'name': 'RandomDot5.png', 'path': 'RandomDot5.png'},
+  {'name': 'both_right.png', 'path': 'both_right.png'},
+  {'name': 'RandomDot2.png', 'path': 'RandomDot2.png'},
+  {'name': 'RandomDot37.png', 'path': 'RandomDot37.png'},
+  {'name': 'RandomDot23.png', 'path': 'RandomDot23.png'},
+  {'name': 'RandomDot42.png', 'path': 'RandomDot42.png'},
+  {'name': 'RandomDot22.png', 'path': 'RandomDot22.png'},
+  {'name': 'RandomDot21.png', 'path': 'RandomDot21.png'},
+  {'name': 'only_sub_wrong.png', 'path': 'only_sub_wrong.png'},
+  {'name': 'prac_condition.csv', 'path': 'prac_condition.csv'},
+  {'name': 'RandomDot27.png', 'path': 'RandomDot27.png'},
+  {'name': 'RandomDot13.png', 'path': 'RandomDot13.png'},
+  {'name': 'RandomDot17.png', 'path': 'RandomDot17.png'},
+  {'name': 'RandomDot34.png', 'path': 'RandomDot34.png'},
+  {'name': 'RandomDot29.png', 'path': 'RandomDot29.png'},
+  {'name': '9dot1.png', 'path': '9dot1.png'},
+  {'name': 'RandomDot31.png', 'path': 'RandomDot31.png'},
+  {'name': 'RandomDot19.png', 'path': 'RandomDot19.png'},
+  {'name': 'RandomDot28.png', 'path': 'RandomDot28.png'},
+  {'name': '11dot2.png', 'path': '11dot2.png'},
+  {'name': '11dot1.png', 'path': '11dot1.png'},
+  {'name': 'RandomDot7.png', 'path': 'RandomDot7.png'},
+  {'name': 'RandomDot18.png', 'path': 'RandomDot18.png'},
+  {'name': 'RandomDot6.png', 'path': 'RandomDot6.png'},
+  {'name': 'only_sub_right.png', 'path': 'only_sub_right.png'},
+  {'name': 'RandomDot11.png', 'path': 'RandomDot11.png'},
+  {'name': 'RandomDot33.png', 'path': 'RandomDot33.png'},
+  {'name': 'RandomDot4.png', 'path': 'RandomDot4.png'},
+  {'name': 'RandomDot36.png', 'path': 'RandomDot36.png'},
+  {'name': 'RandomDot24.png', 'path': 'RandomDot24.png'},
+  {'name': 'RandomDot9.png', 'path': 'RandomDot9.png'},
+  {'name': 'RandomDot39.png', 'path': 'RandomDot39.png'},
+  {'name': 'RandomDot25.png', 'path': 'RandomDot25.png'},
+  {'name': 'RandomDot41.png', 'path': 'RandomDot41.png'},
+  {'name': 'RandomDot10.png', 'path': 'RandomDot10.png'},
+  {'name': 'RandomDot8.png', 'path': 'RandomDot8.png'},
+  {'name': 'RandomDot32.png', 'path': 'RandomDot32.png'},
+  {'name': 'RandomDot15.png', 'path': 'RandomDot15.png'},
+  {'name': 'Punish_Pair.png', 'path': 'Punish_Pair.png'},
+  {'name': 'both_wrong.png', 'path': 'both_wrong.png'},
+  {'name': 'RandomDot38.png', 'path': 'RandomDot38.png'},
+  {'name': 'RandomDot1.png', 'path': 'RandomDot1.png'},
+  {'name': 'RandomDot30.png', 'path': 'RandomDot30.png'},
+  {'name': '7360.JPG', 'path': '7360.JPG'},
+  {'name': 'RandomDot26.png', 'path': 'RandomDot26.png'},
+  {'name': 'RandomDot40.png', 'path': 'RandomDot40.png'},
+  {'name': 'RandomDot12.png', 'path': 'RandomDot12.png'}
+];
+
+function waitUntilResourcesReady() {
+  return function waitUntilResourcesReadyEachFrame() {
+    for (const {name} of experimentResources) {
+      try {
+        psychoJS.serverManager.getResource(name, true);
+      } catch (e) {
+        return Scheduler.Event.FLIP_REPEAT;
+      }
+    }
+    return Scheduler.Event.NEXT;
+  };
+}
+
 const flowScheduler = new Scheduler(psychoJS);
 const dialogCancelScheduler = new Scheduler(psychoJS);
 
 // flowScheduler gets run if the participants presses OK
+flowScheduler.add(waitUntilResourcesReady());
 flowScheduler.add(updateInfo); // add timeStamp
 flowScheduler.add(experimentInit);
 flowScheduler.add(PreDefRoutineBegin());
@@ -265,66 +340,7 @@ if (expInfo['PROLIFIC_PID'] && expInfo['ResponseID']) {
 psychoJS.start({
   expName: expName,
   expInfo: expInfo,
-  resources: [
-    {'name': 'RandomDot16.png', 'path': 'RandomDot16.png'},
-    {'name': 'punishpic.png', 'path': 'punishpic.png'},
-    {'name': '9dot2.png', 'path': '9dot2.png'},
-    {'name': 'condition.csv', 'path': 'condition.csv'},
-    {'name': 'RandomDot35.png', 'path': 'RandomDot35.png'},
-    {'name': 'RandomDot20.png', 'path': 'RandomDot20.png'},
-    {'name': 'RandomDot14.png', 'path': 'RandomDot14.png'},
-    {'name': 'pairing_sub.png', 'path': 'pairing_sub.png'},
-    {'name': '9290.JPG', 'path': '9290.JPG'},
-    {'name': 'Resp_Pic.png', 'path': 'Resp_Pic.png'},
-    {'name': 'RandomDot3.png', 'path': 'RandomDot3.png'},
-    {'name': 'RandomDot5.png', 'path': 'RandomDot5.png'},
-    {'name': 'both_right.png', 'path': 'both_right.png'},
-    {'name': 'RandomDot2.png', 'path': 'RandomDot2.png'},
-    {'name': 'RandomDot37.png', 'path': 'RandomDot37.png'},
-    {'name': 'RandomDot23.png', 'path': 'RandomDot23.png'},
-    {'name': 'RandomDot42.png', 'path': 'RandomDot42.png'},
-    {'name': 'RandomDot22.png', 'path': 'RandomDot22.png'},
-    {'name': 'RandomDot21.png', 'path': 'RandomDot21.png'},
-    {'name': 'only_sub_wrong.png', 'path': 'only_sub_wrong.png'},
-    {'name': 'prac_condition.csv', 'path': 'prac_condition.csv'},
-    {'name': 'RandomDot27.png', 'path': 'RandomDot27.png'},
-    {'name': 'RandomDot13.png', 'path': 'RandomDot13.png'},
-    {'name': 'RandomDot17.png', 'path': 'RandomDot17.png'},
-    {'name': 'RandomDot34.png', 'path': 'RandomDot34.png'},
-    {'name': 'RandomDot29.png', 'path': 'RandomDot29.png'},
-    {'name': '9dot1.png', 'path': '9dot1.png'},
-    {'name': 'RandomDot31.png', 'path': 'RandomDot31.png'},
-    {'name': 'RandomDot19.png', 'path': 'RandomDot19.png'},
-    {'name': 'RandomDot28.png', 'path': 'RandomDot28.png'},
-    {'name': '11dot2.png', 'path': '11dot2.png'},
-    {'name': '11dot1.png', 'path': '11dot1.png'},
-    {'name': 'RandomDot7.png', 'path': 'RandomDot7.png'},
-    {'name': 'RandomDot18.png', 'path': 'RandomDot18.png'},
-    {'name': 'RandomDot6.png', 'path': 'RandomDot6.png'},
-    {'name': 'only_sub_right.png', 'path': 'only_sub_right.png'},
-    {'name': 'RandomDot11.png', 'path': 'RandomDot11.png'},
-    {'name': 'RandomDot33.png', 'path': 'RandomDot33.png'},
-    {'name': 'RandomDot4.png', 'path': 'RandomDot4.png'},
-    {'name': 'RandomDot36.png', 'path': 'RandomDot36.png'},
-    {'name': 'RandomDot24.png', 'path': 'RandomDot24.png'},
-    {'name': 'RandomDot9.png', 'path': 'RandomDot9.png'},
-    {'name': 'RandomDot39.png', 'path': 'RandomDot39.png'},
-    {'name': 'RandomDot25.png', 'path': 'RandomDot25.png'},
-    {'name': 'RandomDot41.png', 'path': 'RandomDot41.png'},
-    {'name': 'RandomDot10.png', 'path': 'RandomDot10.png'},
-    {'name': 'RandomDot8.png', 'path': 'RandomDot8.png'},
-    {'name': 'RandomDot32.png', 'path': 'RandomDot32.png'},
-    {'name': 'RandomDot15.png', 'path': 'RandomDot15.png'},
-    {'name': 'Punish_Pair.png', 'path': 'Punish_Pair.png'},
-    {'name': 'both_wrong.png', 'path': 'both_wrong.png'},
-    {'name': 'RandomDot38.png', 'path': 'RandomDot38.png'},
-    {'name': 'RandomDot1.png', 'path': 'RandomDot1.png'},
-    {'name': 'RandomDot30.png', 'path': 'RandomDot30.png'},
-    {'name': '7360.JPG', 'path': '7360.JPG'},
-    {'name': 'RandomDot26.png', 'path': 'RandomDot26.png'},
-    {'name': 'RandomDot40.png', 'path': 'RandomDot40.png'},
-    {'name': 'RandomDot12.png', 'path': 'RandomDot12.png'}
-  ]
+  resources: experimentResources
 });
 
 psychoJS.experimentLogger.setLevel(core.Logger.ServerLevel.EXP);
