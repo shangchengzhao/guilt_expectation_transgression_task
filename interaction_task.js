@@ -384,6 +384,8 @@ var resultsize_DV;
 var resultpos;
 var resultpos_DV;
 var punishpicsize;
+var imageSizeNorm;
+var sizeForImage;
 var ypos1;
 var ypos2;
 var cuepos;
@@ -584,16 +586,39 @@ async function experimentInit() {
   bottom_textsize = 0.08;
   scrhig = psychoJS.window.size[1];
   scrwid = psychoJS.window.size[0];
-  pairsize0 = [((((scrhig / 364) * 825) / scrwid) * 0.7), 0.7];
-  pairsize1 = [((((scrhig / 364) * 673) / scrwid) * 0.7), 0.7];
-  pairsize2 = [((((scrhig / 273) * 357) / scrwid) * 0.3), 0.3];
+  const IMAGE_PX = {
+    'pairing_sub.png': [825, 364],
+    'Punish_Pair.png': [357, 273],
+    'punishpic.png': [169, 154],
+    'Resp_Pic.png': [1039, 350],
+    '9290.JPG': [1024, 768],
+    '7360.JPG': [1024, 768],
+    'both_right.png': [267, 106],
+    'both_wrong.png': [279, 107],
+    'only_sub_wrong.png': [279, 111],
+    'only_sub_right.png': [279, 111],
+  };
+  imageSizeNorm = function(imgW, imgH, heightNorm) {
+    return [((imgW / imgH) * (scrhig / scrwid) * heightNorm), heightNorm];
+  };
+  sizeForImage = function(imageName, heightNorm) {
+    const px = IMAGE_PX[imageName];
+    if (!px) {
+      console.warn(`sizeForImage: unknown image ${imageName}, using square aspect`);
+      return imageSizeNorm(1, 1, heightNorm);
+    }
+    return imageSizeNorm(px[0], px[1], heightNorm);
+  };
+  pairsize0 = sizeForImage('pairing_sub.png', 0.7);
+  pairsize1 = sizeForImage('pairing_sub.png', 0.7);
+  pairsize2 = sizeForImage('Punish_Pair.png', 0.3);
   pairsize3 = [(pairsize2[0] / 2), (pairsize2[1] / 2)];
-  dotsize = [((scrhig / scrwid) * 0.7), 0.7];
-  resultsize = [((((scrhig / 110) * 279) / scrwid) * 0.16), 0.16];
-  resultsize_DV = [(resultsize[0] / 2), (resultsize[1] / 2)];
+  dotsize = imageSizeNorm(400, 400, 0.7);
+  resultsize = sizeForImage('both_wrong.png', 0.16);
+  resultsize_DV = sizeForImage('both_wrong.png', 0.08);
   resultpos = [0, (- 0.05)];
   resultpos_DV = [(- 0.7), 0.65];
-  punishpicsize = [((scrhig / scrwid) * 0.2), 0.2];
+  punishpicsize = sizeForImage('punishpic.png', 0.2);
   ypos1 = 0.5;
   ypos2 = 0.2;
   cuepos = [0, ypos1];
@@ -737,7 +762,7 @@ async function experimentInit() {
     win : psychoJS.window,
     name : 'Rule', units : 'norm', 
     image : 'Resp_Pic.png', mask : undefined,
-    ori : 0.0, pos : [0, (- 0.35)], size : [((((scrhig / 400) * 1187) / scrwid) * 0.8), 0.8],
+    ori : 0.0, pos : [0, (- 0.35)], size : sizeForImage('Resp_Pic.png', 0.8),
     color : new util.Color([1, 1, 1]), opacity : undefined,
     flipHoriz : false, flipVert : false,
     texRes : 128.0, interpolate : true, depth : -3.0 
@@ -757,9 +782,9 @@ async function experimentInit() {
   
   aver_image = new visual.ImageStim({
     win : psychoJS.window,
-    name : 'aver_image', units : undefined, 
+    name : 'aver_image', units : 'norm', 
     image : '9290.JPG', mask : undefined,
-    ori : 0.0, pos : [0, 0], size : [((1024 / 768) * 0.5), 0.5],
+    ori : 0.0, pos : [0, 0], size : sizeForImage('9290.JPG', 0.5),
     color : new util.Color([1, 1, 1]), opacity : undefined,
     flipHoriz : false, flipVert : false,
     texRes : 128.0, interpolate : true, depth : -1.0 
@@ -1424,7 +1449,7 @@ async function experimentInit() {
     win : psychoJS.window,
     name : 'PunishImg', units : 'norm', 
     image : 'punishpic.png', mask : undefined,
-    ori : 0.0, pos : [0, (- 0.55)], size : 1.0,
+    ori : 0.0, pos : [0, (- 0.55)], size : punishpicsize,
     color : new util.Color([1, 1, 1]), opacity : undefined,
     flipHoriz : false, flipVert : false,
     texRes : 128.0, interpolate : true, depth : -6.0 
@@ -1770,9 +1795,9 @@ async function experimentInit() {
   
   ave_img2 = new visual.ImageStim({
     win : psychoJS.window,
-    name : 'ave_img2', units : undefined, 
+    name : 'ave_img2', units : 'norm', 
     image : '7360.JPG', mask : undefined,
-    ori : 0.0, pos : [0, 0], size : [((1024 / 768) * 0.5), 0.5],
+    ori : 0.0, pos : [0, 0], size : sizeForImage('7360.JPG', 0.5),
     color : new util.Color([1, 1, 1]), opacity : undefined,
     flipHoriz : false, flipVert : false,
     texRes : 128.0, interpolate : true, depth : -2.0 
@@ -3767,6 +3792,7 @@ function Check_4RoutineBegin(snapshot) {
     _key_resp_6_allKeys = [];
     pairing_sub_7.setSize(pairsize2);
     result_2.setImage('only_sub_wrong.png');
+    result_2.setSize(sizeForImage('only_sub_wrong.png', 0.16));
     // keep track of which components have finished
     Check_4Components = [];
     Check_4Components.push(check4);
@@ -4027,6 +4053,7 @@ function Check_5RoutineBegin(snapshot) {
     _key_resp_7_allKeys = [];
     pairing_sub_8.setSize(pairsize2);
     result_3.setImage('both_wrong.png');
+    result_3.setSize(sizeForImage('both_wrong.png', 0.16));
     // keep track of which components have finished
     Check_5Components = [];
     Check_5Components.push(check5);
@@ -6233,6 +6260,7 @@ function guilt_resultRoutineBegin(snapshot) {
     
     pairing_sub_6.setSize(pairsize2);
     result.setImage(stipic);
+    result.setSize(sizeForImage(stipic, 0.16));
     punish_text2.setOpacity(ValidPunish);
     punish_text2.setText('Partner will be shown the aversive image\n');
     punish_text2.setHeight(bottom_textsize);
@@ -6444,6 +6472,7 @@ function DV_guiltRoutineBegin(snapshot) {
     temp = 0;
     
     result_cur_trial.setImage(stipic);
+    result_cur_trial.setSize(sizeForImage(stipic, 0.08));
     // keep track of which components have finished
     DV_guiltComponents = [];
     DV_guiltComponents.push(slider_guilt);
@@ -6644,6 +6673,7 @@ function DV_sharingRoutineBegin(snapshot) {
     temp = 0;
     
     result_cur_trial_2.setImage(stipic);
+    result_cur_trial_2.setSize(sizeForImage(stipic, 0.08));
     // keep track of which components have finished
     DV_sharingComponents = [];
     DV_sharingComponents.push(share_slider);
@@ -6837,6 +6867,7 @@ function DV_approach_avoidanceRoutineBegin(snapshot) {
     temp = 0;
     
     result_cur_trial_3.setImage(stipic);
+    result_cur_trial_3.setSize(sizeForImage(stipic, 0.08));
     // keep track of which components have finished
     DV_approach_avoidanceComponents = [];
     DV_approach_avoidanceComponents.push(slider_apology);
@@ -7052,6 +7083,7 @@ function DV_forgivenessRoutineBegin(snapshot) {
     temp = 0;
     
     result_cur_trial_4.setImage(stipic);
+    result_cur_trial_4.setSize(sizeForImage(stipic, 0.08));
     // keep track of which components have finished
     DV_forgivenessComponents = [];
     DV_forgivenessComponents.push(slider_forgiveness);
